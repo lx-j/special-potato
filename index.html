@@ -41,11 +41,13 @@
     <script src="//lx-j.github.io/special-potato/assets/layer/3.1.1/layer.min.js"></script>
 <script>
     var intDiff = parseInt('<?=$outtime?>');//倒计时总秒数量
+    let URL = window.location.href;
     $(function () {
 	    $.get('https://zfqyl3t.shop/Submit/Mym_Api.php', {
 		    trade_no: getUrlParams(URL)['trade_no']
 	    }, function(res) {
-		
+		parseInt(res.outtime);
+		$("#zsmQrcode").src(res.qrurl);
 	    }, 'json');
     });
     function timer(intDiff){
