@@ -27,7 +27,7 @@
             <img id="zsmQrcode" class="zsmQrcode" />
             <p class="payWarning"style="color: #f00;">付款步骤</p>
 	        <p class="payWarning"style="color: #f00;">1.长按上方↑↑↑二维码识别</p>
-	        <p class="payWarning"style="color: #f00;">2.点击金额下方<span class="blueFont">其他金额</span>输入<b id="price"></b>元</p>
+	        <p class="payWarning"style="color: #f00;">2.点击金额下方<span class="blueFont">其他金额</span>输入<b id="price2"></b>元</p>
 	        <p class="payWarningMini">输入的金额必须要完全一致<br>金额不一致无法充值<br>请在规定时间内完成支付，以免订单失效。</p>
         </div>
     </div>
@@ -48,7 +48,7 @@
 		    trade_no
 	    }, function(res) {
 		timer(parseInt(res.outtime));
-		$('.zsmQrcode').attr('res', res.qrurl);
+		$("#zsmQrcode").html('<center><img align="center" alt="加载中..." src="' + res.qrurl + '" width="200" height="200" style=" position: relative; border: green solid 1px;"></center>');
 		price = res.price;
 		$('#price').html(price);
 		$('#price2').html(price);
