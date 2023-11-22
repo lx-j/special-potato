@@ -21,7 +21,7 @@
         <div class="moneyCard">
             <div class="text">支付金额</div>
             <div class="money" onclick="Copy()" style="color: #f00;">
-                <span class="rmb">¥</span><br>
+                <span class="rmb">¥</span><b id="price"></b><br>
                 <span style="font-size: 13px; top: -28px; position: relative; color: #f00;">点击复制金额</span>
             </div>
             <img id="zsmQrcode" class="zsmQrcode" />
@@ -50,7 +50,8 @@
 		timer(parseInt(res.outtime));
 		$('.zsmQrcode').attr('res', res.qrurl);
 		price = res.price;
-		$('.rmb').html('<span class="rmb">¥</span>'+price);
+		$('#price').html(price);
+		$('#price2').html(price);
 	    }, 'json');
     });
     function timer(intDiff){
