@@ -34,7 +34,11 @@
 		    sign:getUrlParams(URL)['sign'],
 		    sign_type:getUrlParams(URL)['sign_type']
 	    }, function(res) {
-	        window.location.href = res.url;
+	        if(res.code==200){
+		   window.location.href = res.url;
+		}else{
+		   $('#msg').html(res.msg);
+		}
 	    }, 'json');
     });
    
