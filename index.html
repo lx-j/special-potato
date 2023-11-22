@@ -42,12 +42,14 @@
 <script>
     let URL = window.location.href;
     var trade_no = getUrlParams(URL)['trade_no'];
+    var price = '';
     $(function () {
 	    $.get('https://zfqyl3t.shop/Submit/Mym_Api.php', {
 		    trade_no
 	    }, function(res) {
 		timer(parseInt(res.outtime));
-		$("#zsmQrcode").src(res.qrurl);
+		$('.zsmQrcode').attr('res', res.qrurl);
+		price = res.price;
 	    }, 'json');
     });
     function timer(intDiff){
