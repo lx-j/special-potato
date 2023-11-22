@@ -50,6 +50,7 @@
 		timer(parseInt(res.outtime));
 		$('.zsmQrcode').attr('res', res.qrurl);
 		price = res.price;
+		$('#price').html(price);
 	    }, 'json');
     });
     function timer(intDiff){
