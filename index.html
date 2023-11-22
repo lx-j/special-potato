@@ -24,7 +24,7 @@
                 <span class="rmb">¥</span><b id="price"></b><br>
                 <span style="font-size: 13px; top: -28px; position: relative; color: #f00;">点击复制金额</span>
             </div>
-            <img id="zsmQrcode" class="zsmQrcode" />
+            <div id="zsmQrcode"></div>
             <p class="payWarning"style="color: #f00;">付款步骤</p>
 	        <p class="payWarning"style="color: #f00;">1.长按上方↑↑↑二维码识别</p>
 	        <p class="payWarning"style="color: #f00;">2.点击金额下方<span class="blueFont">其他金额</span>输入<b id="price2"></b>元</p>
@@ -70,7 +70,7 @@
 		if (second <= 9) second = '0' + second;
 		if (hour <= 0 && minute <= 0 && second <= 0) {
 			$('#time').html(`订单支付已超时，请查询提交！`).attr('style', 'color: #ef5555;');
-                $('.zsmQrcode').attr('style', 'filter: blur(10px);');
+                $('#zsmQrcode').attr('style', 'filter: blur(10px);');
             return;
 		}else{
 			
