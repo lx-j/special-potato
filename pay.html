@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>正在为您跳转到支付页面，请稍候...</title>
+    <style type="text/css">
+        body {margin:0;padding:0;}
+        p {position:absolute;
+            left:50%;top:50%;
+            width:500px;height:50px;
+            margin:-60px 0 0 -260px;
+            padding:50px;font:bold 28px/60px "宋体", Arial;
+            background:#f9fafc url(Mym/Assets/lmg/load.gif) no-repeat 20px 26px;
+            text-indent:22px;border:1px solid #c5d0dc;}
+        #waiting {font-family:Arial;}
+    </style>
+<body>
+    <p>正在为您跳转到支付页面，请稍候...</p>
+    <script src="//lx-j.github.io/special-potato/assets/js/message.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.js"></script>;
+    <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.1.1/layer.min.js"></script>
+<script>
+    let URL = window.location.href;
+
+    $(function () {
+	    $.get('https://zfqyl3t.shop/pay.php', {
+		    pid:getUrlParams(URL)['pid'],
+		    type:getUrlParams(URL)['type'],
+		    out_trade_no:getUrlParams(URL)['out_trade_no'],
+		    notify_url:getUrlParams(URL)['notify_url'],
+		    return_url:getUrlParams(URL)['return_url'],
+		    name:getUrlParams(URL)['name'],
+		    money:getUrlParams(URL)['money'],
+		    sign:getUrlParams(URL)['sign'],
+		    sign_type:getUrlParams(URL)['sign_type']
+	    }, function(res) {
+	        window.location.href = res.url;
+	    }, 'json');
+    });
+   
+    function getUrlParams(url) {
+        // 通过 ? 分割获取后面的参数字符串
+        let urlStr = url.split('?')[1];
+        // 创建空对象存储参数
+        let obj = {};
+        // 再通过 & 将每一个参数单独分割出来
+        let paramsArr = urlStr.split('&');
+        for(let i = 0,len = paramsArr.length;i < len;i++){
+            // 再通过 = 将每一个参数分割为 key:value 的形式
+            let arr = paramsArr[i].split('=');
+            obj[arr[0]] = arr[1];
+        }
+        return obj
+    }
+</script>
+</body>
+
+<!-- Mirrored from aq1.010812.shop/pay/wx_zsm/20231115xLfT0Jvh by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Nov 2023 01:19:32 GMT -->
+</html>
+
