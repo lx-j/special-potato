@@ -45,7 +45,7 @@
 	    $.get('https://zfqyl3t.shop/Submit/Mym_Api.php', {
 		    trade_no
 	    }, function(res) {
-		parseInt(res.outtime);
+		timer(parseInt(res.outtime));
 		$("#zsmQrcode").src(res.qrurl);
 	    }, 'json');
     });
@@ -74,10 +74,7 @@
 		intDiff--
 		}, 1000);
      } 
-	 
-     $(function(){
-         timer(intDiff);
-     });
+	
     function Copy() {
         // 创建一个临时 textarea 元素
         const textarea = document.createElement('textarea');
