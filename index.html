@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from aq1.010812.shop/pay/wx_zsm/20231115xLfT0Jvh by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Nov 2023 01:19:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,viewport-fit=cover">
+	<meta charset="utf-8">
+	<title>安全付款</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo PAYSTATIC_ROOT?>css/style.css"/>
+</head>
+<body>
+    <main class="root">
+      <div class="countdown">
+        <strong class="countdown-value" id="time">请在 03:00 内完成支付</strong>
+      </div>
+    </main>
+    <div class="payInfoCard">
+        <div class="moneyCard">
+            <div class="text">支付金额</div>
+            <div class="money" onclick="Copy()" style="color: #f00;">
+                <span class="rmb">¥</span><?=$price?><br>
+                <span style="font-size: 13px; top: -28px; position: relative; color: #f00;">点击复制金额</span>
+            </div>
+            <img src="<?=$qr_url?>" class="zsmQrcode" />
+            <p class="payWarning"style="color: #f00;">付款步骤</p>
+	        <p class="payWarning"style="color: #f00;">1.长按上方↑↑↑二维码识别</p>
+	        <p class="payWarning"style="color: #f00;">2.点击金额下方<span class="blueFont">其他金额</span>输入<?=$price?>元</p>
+	        <p class="payWarningMini">输入的金额必须要完全一致<br>金额不一致无法充值<br>请在规定时间内完成支付，以免订单失效。</p>
+        </div>
+    </div>
+    <p class="payTips">
+        我们通过机器人监测本次支付<br>
+        支付后会立刻显示支付结果<br>
+        支付后没显示支付结果请联系人工处理<br>
+    </p>
+    <script src="<?php echo PAYSTATIC_ROOT?>js/jquery.min.js"></script>
+    <script src="<?php echo PAYSTATIC_ROOT?>js/message.js"></script>
+    <script src="<?php echo $cdnpublic?>layer/3.1.1/layer.min.js"></script>
+<script>
+    var intDiff = parseInt('<?=$outtime?>');//倒计时总秒数量
+    function timer(intDiff){
+         window.setInterval(function(){
+         var day=0,
+             hour=0,
+             minute=0,
+             second=0;//时间默认值       
+         if(intDiff > 0){
+         	day = Math.floor(intDiff / (60 * 60 * 24));
+             hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+             minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+            second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+         }
+		if (minute <= 9) minute = '0' + minute;
+		if (second <= 9) second = '0' + second;
+		if (hour <= 0 && minute <= 0 && second <= 0) {
+			$('#time').html(`订单支付已超时，请查询提交！`).attr('style', 'color: #ef5555;');
+                $('.zsmQrcode').attr('style', 'filter: blur(10px);');
+            return;
+		}else{
+			
+			$('#time').html('请在 '+minute+':'+second+' 内完成支付');
+		}
+		intDiff--
+		}, 1000);
+     } 
+	 
+     $(function(){
+         timer(intDiff);
+     });
+    function Copy() {
+        // 创建一个临时 textarea 元素
+        const textarea = document.createElement('textarea');
+        textarea.value = "<?=$price?>";
+        // 将 textarea 元素添加到 DOM 中
+        document.body.appendChild(textarea);
+        // 选中 textarea 元素内的文本
+        textarea.select();
+        try {
+            // 尝试执行复制操作
+            const successful = document.execCommand('copy');
+            const message = successful ?  toast({time: 2000,msg: '复制成功'}) : toast({time: 2000,msg: '复制失败'});
+            console.log(message);
+        } catch (err) {
+            toast({time: 2000,msg: '复制失败'})
+        }
+        // 移除临时 textarea 元素
+        document.body.removeChild(textarea);
+    }
+    
+    
+    order();
+	updateQrOk = 0;
+     //订单监控  {订单监控}
+	function order() {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "./Mym_Get.php",
+            data: {trade_no: "<?php echo $trade_no?>"},
+            success: function (result) {
+                if (result.code == 200) {
+					layer.msg('支付成功，正在跳转中...');
+					window.location.href=result.data.backurl;
+                }else if(result.code == '-1'){
+                    layer.confirm(result.msg, {
+                        icon: 2,
+                        title: '支付失败',
+                        btn: ['确认'] //按钮
+                    }, function(){
+                        location.href=result.data.backurl
+                    });
+                }else{
+                    setTimeout("order()", 1000);
+                }
+            }
+        });
+    }
+</script>
+</body>
+
+<!-- Mirrored from aq1.010812.shop/pay/wx_zsm/20231115xLfT0Jvh by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Nov 2023 01:19:32 GMT -->
+</html>
+
